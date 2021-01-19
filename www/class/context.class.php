@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/dbtool.class.php';
+require_once __DIR__ . '/templatehookmanager.class.php';
 
 class Context {
 
@@ -31,6 +32,11 @@ class Context {
    public $tokenKey = 'ctoken';
 
 	/**
+	 * @var TemplateHookManager $hooks
+	 */
+   public $hooks;
+
+	/**
 	 * Curent object of page
 	 * @var object $object
 	 */
@@ -52,6 +58,7 @@ class Context {
        $this->getRootUrl();
 
        $this->topMenu = new stdClass();
+       $this->hooks = new TemplateHookManager();
 
        $this->tplPath = realpath ( __DIR__ .'/../tpl');
 
@@ -283,7 +290,7 @@ class Context {
 	 * @param false|string $controller
 	 * @return  string
 	 */
-	function newToken($controller = false)
+	public function newToken($controller = false)
 	{
 		if(empty($controller)){ $controller = !empty($this->controller)?$this->controller:'default'; }
 
@@ -335,7 +342,7 @@ class Context {
 	 *
 	 * @return  string
 	 */
-	function currentToken($controller = false)
+	public function currentToken($controller = false)
 	{
 		if(empty($controller)){ $controller = !empty($this->controller)?$this->controller:'default'; }
 		return isset($_SESSION['controllers_tokens'][$controller]['token'])?$_SESSION['controllers_tokens'][$controller]['token']:false;
@@ -346,7 +353,7 @@ class Context {
 	 * @param bool  $erase
 	 * @return bool
 	 */
-	function validateToken($controller = false, $erase = true){
+	public function validateToken($controller = false, $erase = true){
 
 		$token = GETPOST($this->tokenKey, 'aZ09');
 
@@ -366,7 +373,7 @@ class Context {
 	 * @param false|string $controller
 	 * @return string|null
 	 */
-	function getUrlToken($controller = false){
+	public function getUrlToken($controller = false){
 		if(empty($controller)){ $controller = !empty($this->controller)?$this->controller:'default'; }
 		$token = $this->newToken($controller);
 		if($token){
@@ -378,7 +385,7 @@ class Context {
 	 * @param false|string $controller
 	 * @return string|null
 	 */
-	function getFormToken($controller = false){
+	public function getFormToken($controller = false){
 		if(empty($controller)){ $controller = !empty($this->controller)?$this->controller:'default'; }
 		$token = $this->newToken($controller);
 		if($token) {
@@ -386,4 +393,3 @@ class Context {
 		}
 	}
 }
-

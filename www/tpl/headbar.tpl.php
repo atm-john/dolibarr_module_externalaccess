@@ -5,23 +5,26 @@ if (empty($conf) || ! is_object($conf))
 	exit;
 }
 ?>
-	<header class="commonhead text-center text-white d-flex">
-      <div class="container my-auto">
-        <div class="row">
+	<header class="commonhead text-center text-white">
+      <div class="container">
           <?php if(!empty($context->title)){ ?>
-          <div class="col-lg-10 mx-auto">
             <h1 class="text-uppercase">
               <strong><?php echo $context->title; ?></strong>
             </h1>
             <hr>
-          </div>
           <?php } ?>
           <?php if(!empty($context->desc)) { ?>
-          <div class="col-lg-8 mx-auto">
-            <p class="text-faded mb-5"><?php echo $context->desc; ?></p>
-          </div>
+          	<p class="text-faded"><?php echo $context->desc; ?></p>
           <?php } ?>
-        </div>
-      </div>
+
+
+		  <?php echo $context->hook('header_more'); ?>
+
+<!--			<div class="clearfix" ></div>-->
+<!--			<a class="btn btn-primary btn-strong pull-left" href="http://localhost/atm/dolibarr/htdocs/custom/externalaccess/www/?controller=stockreplenishmentlist&amp;ctoken=fed168eaeebe227c37fe6fd10bcf4aa0">-->
+<!--				<i class="fa fa-chevron-left"></i> Retour liste-->
+<!--			</a>-->
+<!--			<div class="clearfix" ></div>-->
+
+	  </div>
     </header>
-   
